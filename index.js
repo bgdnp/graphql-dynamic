@@ -1,6 +1,6 @@
 const Query = require('./src/Query')
 const Partial = require('./src/Partial')
-const { Int, String, Float } = require('./src/types')
+const { Int, String, Float, Boolean, ID } = require('./src/types')
 
 module.exports = {
   Query,
@@ -8,5 +8,6 @@ module.exports = {
   Int,
   Float,
   String,
-  Boolean
+  Boolean,
+  ID
 }
