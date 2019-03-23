@@ -26,3 +26,5 @@ class Type {
     return true
   }
 }
+
+module.exports = Type
