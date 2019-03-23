@@ -7,5 +7,6 @@ module.exports = {
   Partial,
   Int,
   Float,
-  String
+  String,
+  Boolean
 }
