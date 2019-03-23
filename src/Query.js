@@ -5,11 +5,7 @@ class QueryBuilder {
     this.variables = []
     this.params = []
     Object.keys(params).map(key => {
-      if(typeof params[key] === 'object') {
-        this.variables.push(`$${key}: ${params[key].type()}`)
-      } else {
-        this.variables.push(`$${key}: ${params[key].typeStatic()}`)
-      }
+      this.variables.push(`$${key}: ${params[key].type()}`)
       this.params.push(`${key}: $${key}`)
     })
     this.query = query
