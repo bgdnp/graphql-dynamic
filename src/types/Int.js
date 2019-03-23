@@ -6,7 +6,7 @@ class Int extends Type {
       return true
     }
 
-    throw Error(`Default value must be of type string, ${typeof value} given.`)
+    throw Error(`Default value must be of type integer, ${typeof value} given.`)
   }
 }
 
