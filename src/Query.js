@@ -16,13 +16,12 @@ class QueryBuilder {
   }
 
   body(fields) {
-    const body = this.parseFields(fields)
+    const body = this.parse(fields)
     if (this.variables.length) {
       this.query = `query(${this.variables.join(', ')}) { ${this.query}(${this.params.join(', ')}) ${body} }`
     } else {
       this.query = `query { ${this.query} ${body} }`
     }
-    console.log(this.query)
     return gql`${this.query}`
   }
 
