@@ -2,7 +2,7 @@ const Type = require('./Type')
 
 class ID extends Type {
   validate(value) {
-    if (this.isScalar(value)) {
+    if (this.isScalar(value) || value === null) {
       return true
     }
 

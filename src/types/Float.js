@@ -2,7 +2,7 @@ const Type = require('./Type')
 
 class Float extends Type {
   validate(value) {
-    if (typeof value === 'number') {
+    if (typeof value === 'number' || value === null) {
       return true
     }
 

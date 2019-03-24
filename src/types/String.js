@@ -2,7 +2,7 @@ const Type = require('./Type')
 
 class String extends Type {
   validate(value) {
-    if (typeof value === 'string') {
+    if (typeof value === 'string' || value === null) {
       return true
     }
 

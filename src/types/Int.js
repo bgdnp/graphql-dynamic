@@ -2,7 +2,7 @@ const Type = require('./Type')
 
 class Int extends Type {
   validate(value) {
-    if (Number.isSafeInteger(value)) {
+    if (Number.isSafeInteger(value) || value === null) {
       return true
     }
 

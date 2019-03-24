@@ -2,7 +2,7 @@ const Type = require('./Type')
 
 class Boolean extends Type {
   validate(value) {
-    if (typeof value === 'boolean') {
+    if (typeof value === 'boolean' || value === null) {
       return true
     }
 
