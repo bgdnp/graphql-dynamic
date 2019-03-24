@@ -25,6 +25,11 @@ class Type {
   validate(value) {
     return true
   }
+
+  static validate(value) {
+    const self = new this()
+    return self.validate(value)
+  }
 }
 
 module.exports = Type
