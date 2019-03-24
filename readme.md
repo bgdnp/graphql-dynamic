@@ -139,3 +139,33 @@ query($slug: String = "some-slug") {
 }
 ```
 Typing classes for `Int`, `Float`, `Boolean` and `ID` are also included.
+#### Type specific partial
+For specifing type specific part of the query. For example like this one:
+```
+query($id: String!) {
+  getComponent(id: $id) {
+    name
+    slug
+    ... on Menu {
+      title
+      items {
+        title
+        url
+      }
+    }
+  }
+}
+```
+You can create partial with method named like the type and prefixed with `on`. Query above can be created with:
+```js
+Query.getComponent({
+  id: String
+}).body([
+  'name',
+  'slug',
+  Partial.onMenu([
+    'title',
+    Partial.items(['title', 'url'])
+  ])
+])
+```
