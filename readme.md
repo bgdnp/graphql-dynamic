@@ -1,6 +1,6 @@
 ## Instalation
 ```
-npm install --save graphql-dynamic
+npm install --save graphql-dynamic-queries
 ```
 
 ## Usage
