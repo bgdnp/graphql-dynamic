@@ -1,3 +1,11 @@
+## Introduction
+
+Even if in most cases it is recommended to have static queries predefined, in some situations, like when query structure depends on a data received from another service it is useful to have logic for creating queries on the fly. This package intends to provide this logic in simplest way possible.
+
+## Notice
+
+Package is still growing, some features are missing, like defining inputs, fragments, mutations and subscriptions, but all of these features will be added soon.
+
 ## Instalation
 ```
 npm install --save graphql-dynamic-queries
@@ -5,8 +13,9 @@ npm install --save graphql-dynamic-queries
 
 ## Usage
 #### Basic query
+Load `Query` from the package and call a method which is your query name (even if the method does not exist, query builder is functioning behind a proxy instance which will resolve method name as a query name). In the `body` method pass an array of fields you want to fetch. See example bellow: 
 ```js
-const { Query } = require('graphql-dynamic')
+const { Query } = require('graphql-dynamic-queries')
 
 const myQuery = Query.getUsers().body([
   'name',
@@ -17,7 +26,7 @@ const myQuery = Query.getUsers().body([
 // Then execute the query howerver you prefer
 // Using ApolloProvider, for example
 ```
-This will generate the schema like this:
+This will generate the query like this:
 ```
 query {
   getUsers {
@@ -28,6 +37,7 @@ query {
 }
 ```
 #### Nested objects query
+For nested query structure, you can pass an object instead of strings. Object should have properties `name` which is the root of subset and `fields` which is the array of fields in a subset.
 ```js
 const getPosts = Query.getPosts().body([
   'title',
@@ -51,9 +61,9 @@ query {
   }
 }
 ```
-Instead of passing object with `name` and `fields` properties, it is more practical to use `Partial`. Schema above can be represented as:
+However, for readability purpose, instead of passing object literals this package introduces `Partial` which creates a subset. Method called on a `artial is the root of the subset and array of fields are passed to the method. Example above can be written using partials like this:
 ```js
-const { Query, Partial } = require('graphql-dynamic')
+const { Query, Partial } = require('graphql-dynamic-queries')
 
 const author = Partial.author(['name', 'email'])
 
@@ -63,7 +73,7 @@ const getPosts = Query.getPosts().body([
   author
 ])
 ```
-Partials can be nested in each other:
+Partials, like objects, can be nested in each other:
 ```js
 const getPosts = Query.getPosts().body([
   'title',
@@ -96,12 +106,13 @@ query {
 }
 ```
 #### Declaring query variables
+Defining query parameters can be done passing an object to query method. Object keys are the names of parameters and values are type classes provided by the package. See example with query parameter bellow:
 ```js
-const { Query, String } = require('graphql-dynamic')
+const { Query, String } = require('graphql-dynamic-queries')
 
-const postQuery = Query.getPostBySlug(
+const postQuery = Query.getPostBySlug({
   slug: String
-).body([
+}).body([
   'title',
   'content'
 ])
@@ -115,21 +126,21 @@ query($slug: String!) {
   }
 }
 ```
-Variables are required by default, and without default value. This can be configured using set static method on String class
+Variables are required by default, and without default value. This can be configured using set static method on type class:
 ```js
-const { Query, String } = require('graphql-dynamic')
+const { Query, String } = require('graphql-dynamic-queries')
 
-const postQuery = Query.getPostBySlug(
+const postQuery = Query.getPostBySlug({
   slug: String.set({
     required: false,
     default: 'some-slug'
   })
-).body([
+}).body([
   'title',
   'content'
 ])
 ```
-Result
+Result:
 ```
 query($slug: String = "some-slug") {
   getPostBySlug(slug: $slug) {
@@ -156,7 +167,7 @@ query($id: String!) {
   }
 }
 ```
-You can create partial with method named like the type and prefixed with `on`. Query above can be created with:
+You can create partial with method prefixed with `on` and followed by type name. Query above can be created with:
 ```js
 Query.getComponent({
   id: String

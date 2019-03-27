@@ -1,6 +1,6 @@
 {
-  "name": "graphql-dynamic",
-  "version": "1.0.0",
+  "name": "graphql-dynamic-queries",
+  "version": "1.0.3",
   "description": "Dynamic GraphQL query builder",
   "main": "index.js",
   "scripts": {
